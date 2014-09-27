@@ -1,0 +1,52 @@
+<snippet>
+  <content><![CDATA[
+(function(basepaths, depencies, factory) {
+  var i, args = [], basepath;
+
+  if (typeof define !== 'undefined' && define.amd) {
+    basepath = (typeof basepaths.define === 'string') ? basepaths.define + '/' : '';
+    for (i = 0; i < depencies.length; i++) {
+      depencies[i] = basepath + depencies[i];
+    }
+    define(depencies, factory);
+  } else if (typeof module !== 'undefined' && module.exports) {
+    basepath = (typeof basepaths.commonjs === 'string') ? basepaths.commonjs + '/' : '';
+    for (i = 0; i < depencies.length; i++) {
+      args[i] = require('./' + basepath + depencies[i] + '.js');
+    }
+    module.exports = factory.apply(this, args);
+  } else {
+    for (i = 0; i < depencies.length; i++) {
+      args[i] = window[depencies[i]];
+    }
+    window.${1:Foo} = factory.apply(this, args);
+  }
+}(
+
+
+
+
+
+//
+// ${1:Foo}
+//
+{
+  // Base paths
+  $2
+}, [
+  // Dependencies
+  $3
+], function(
+  // Local variables of dependencies
+  $4
+) {
+  var ${1:Foo} = ${5:function() }{
+    $0
+  };
+
+  return ${1:Foo};
+}));
+]]></content>
+  <tabTrigger>modulefactory</tabTrigger>
+  <scope>source.js</scope>
+</snippet>
